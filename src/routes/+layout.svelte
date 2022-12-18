@@ -11,7 +11,7 @@
 	</main>
 
 	<footer>
-		<p>www.playlist.co.il</p>
+		<p>הפלייליסט - מבית ורבנר</p>
 	</footer>
 </div>
 

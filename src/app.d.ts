@@ -1,9 +1,23 @@
-// See https://kit.svelte.dev/docs/types#app
+/// <reference types="@sveltejs/kit" />
+
+interface SessionData {
+	userID: string;
+}
+
+// See https://kit.svelte.dev/docs#typescript
 // for information about these interfaces
-// and what to do when importing types
 declare namespace App {
-	// interface Error {}
-	// interface Locals {}
-	// interface PageData {}
-	// interface Platform {}
+	interface Locals {
+		session: import('svelte-kit-cookie-session').Session<SessionData>;
+	}
+
+	interface PageData {
+		session: SessionData;
+	}
+
+	//interface Platform {}
+
+//	interface PrivateEnv {}
+
+//	interface PublicEnv {}
 }
