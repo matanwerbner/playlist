@@ -9,6 +9,7 @@
 	let description = '';
 	let location = '';
 	let selectedDay = Days[0];
+	let adminName = '';
 	let time = '';
 	const onSubmit = async (/** @type {{ preventDefault: () => void; }} */ e) => {
 		e.preventDefault();
@@ -20,7 +21,15 @@
 				time,
 				day: selectedDay.id,
 				adminID: session.userID,
-				members: {}
+				members: {
+					[session.userID]: {
+						attending: true,
+						user: {
+							id: session.userID,
+							name: adminName
+						}
+					}
+				}
 			});
 			goto(`/meet/${result}`, { replaceState: false });
 		} catch (ex) {}
@@ -36,7 +45,6 @@
 	<form on:submit={onSubmit}>
 		<p>
 			<label for="meetingTitle"> כותרת: </label>
-
 			<input bind:value={title} name="meetingTitle" id="meetingTitle" />
 		</p>
 		<p>
@@ -70,6 +78,11 @@
 			<label for="meetingTime">באיזו שעה?</label>
 
 			<input bind:value={time} type="time" />
+		</p>
+		<p class="adminNameContainer">
+			<label for="meetingTime">שם המארגן</label>
+
+			<input bind:value={adminName} />
 		</p>
 
 		<button type="submit">צור פגישה</button>

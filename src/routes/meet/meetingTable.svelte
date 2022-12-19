@@ -1,5 +1,5 @@
 <table
-	class="border-collapse border-hidden rounded-xl w-full border border-slate-400 bg-white text-lg shadow-lg"
+	class="border-collapse border-hidden rounded-xl w-full border border-slate-400 bg-slate-50 shadow-lg"
 >
 	<tbody>
 		<slot />

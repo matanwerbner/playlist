@@ -39,7 +39,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"date-picker-svelte": "^2.2.5",
 		"firebase": "^9.15.0",
 		"svelte-kit-cookie-session": "^3.3.2"
 	}

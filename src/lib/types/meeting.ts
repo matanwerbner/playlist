@@ -1,3 +1,5 @@
+import type { User } from './user';
+
 export type Meeting = {
 	title: string;
 	description: string;
@@ -5,5 +7,10 @@ export type Meeting = {
 	time: string;
 	day: 1 | 2 | 3 | 4 | 5 | 6 | 7;
 	adminID: string;
-	members: { [userId: string]: boolean };
+	members: {
+		[userId: string]: {
+			user: User;
+			attending: boolean;
+		};
+	};
 };
