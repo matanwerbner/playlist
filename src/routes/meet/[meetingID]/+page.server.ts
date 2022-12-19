@@ -1,5 +1,5 @@
-import { error } from '@sveltejs/kit';
-import { getMeeting } from '../../../firebase';
+import { error, fail } from '@sveltejs/kit';
+import { getMeeting, updateMeeting } from '../../../firebase';
 
 type routeParams = { meetingID: string };
 
@@ -12,3 +12,30 @@ export async function load({ params }: { params: routeParams }) {
 
 	throw error(404, 'Not found');
 }
+
+/** @type {import('./$types').Actions} */
+export const actions = {
+	setAttending: async ({ cookies, request, params, locals }) => {
+		const data = await request.formData();
+		const meetingID = params.meetingID;
+		const userID = locals.session.data.userID;
+		const isAttending = data.get('isAttending') === 'true';
+		const meeting = await getMeeting(meetingID);
+		if (meeting.exists()) {
+			const members = meeting.data().members;
+			await updateMeeting(meetingID, {
+				...members,
+				[userID]: {
+					attending: isAttending,
+					user: {
+						id: userID,
+						name: 'lali'
+					}
+				}
+			});
+			return { success: true };
+		} else {
+			return fail(404);
+		}
+	}
+};

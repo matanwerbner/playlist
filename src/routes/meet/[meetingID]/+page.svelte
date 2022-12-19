@@ -1,6 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import { Days } from '$lib/consts';
+	import { enhance } from '$app/forms';
 	import MeetingTableCell from '../meetingTableCell.svelte';
 	import MeetingTable from '../meetingTable.svelte';
 	import Going from '$lib/icons/going.svelte';
@@ -10,18 +11,29 @@
 	$: currUserID = session.userID;
 	/** @type {import('./$types').PageData} */
 	export let data;
-	const isAttending = (/** @type {string} */ userID) => data?.members[userID]?.attending === true;
 	const dayName = Days.find((d) => d.id == data.day)?.name;
 </script>
 
-<p class="mb-5 w-full flex gap-x-3">
-	{#if !data?.members.hasOwnProperty(currUserID) && !(data.adminID == currUserID)}
-		<CustomButton className="w-1/2 bg-green-500"><Going />מגיע\ה</CustomButton>
+{#if !data?.members.hasOwnProperty(currUserID) && !(data.adminID == currUserID)}
+	<form class="w-full flex gap-x-3" action="?/setAttending" method="POST" use:enhance>
+		<CustomButton name="isAttending" value="true" className="w-1/2 bg-green-500"
+			><Going />מגיע\ה</CustomButton
+		>
 
-		<CustomButton className="w-1/2 bg-gray-600"><NotGoing />לא מגיע\ה</CustomButton>
-	{/if}
-</p>
-<MeetingTable>
+		<CustomButton name="isAttending" value="false" className="w-1/2 bg-gray-600"
+			><NotGoing />לא מגיע\ה</CustomButton
+		>
+	</form>
+{:else}
+	<p>
+		{#if data?.members[currUserID].attending}
+			<Going /> מגיע\ה
+		{:else}
+			<NotGoing /> לא מגיע\ה
+		{/if}
+	</p>
+{/if}
+<MeetingTable className="mt-5">
 	<tr>
 		<MeetingTableCell>כותרת:</MeetingTableCell>
 		<MeetingTableCell className="meetingTableValue">{data.title}</MeetingTableCell>
@@ -49,7 +61,7 @@
 					<tr>
 						<td class="w-1/2">{value.user.name}</td>
 						<td class="w-1/2"
-							>{#if isAttending(key)}
+							>{#if value.attending === true}
 								<Going /> מגיע\ה
 							{:else}
 								<NotGoing /> לא מגיע\ה

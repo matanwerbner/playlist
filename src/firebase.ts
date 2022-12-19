@@ -1,7 +1,7 @@
 import { getRandomString } from '$lib/consts';
 import type { Meeting } from '$lib/types/meeting';
 import { initializeApp } from 'firebase/app';
-import { doc, setDoc, getFirestore, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getFirestore, getDoc, updateDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCA65JBypoxMd9hKVaiaxo_3CjvqxOK89A',
@@ -27,4 +27,7 @@ const createMeeting = async (meetingParams: Meeting) => {
 
 const getMeeting = async (slug: string) => await getDoc(doc(db, 'meetings', slug));
 
-export { createMeeting, getMeeting };
+const updateMeeting = async (slug: string, data: any) =>
+	await updateDoc(doc(db, 'meetings', slug), 'members', data);
+
+export { createMeeting, getMeeting, updateMeeting };
