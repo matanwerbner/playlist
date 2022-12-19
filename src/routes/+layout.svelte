@@ -1,5 +1,6 @@
 <script>
 	import Header from './Header.svelte';
+	import '../app.css';
 	import './styles.css';
 </script>
 
@@ -11,7 +12,7 @@
 	</main>
 
 	<footer>
-		<p>הפלייליסט - מבית ורבנר</p>
+		<p class="text-3xl font-bold underline">הפלייליסט - מבית ורבנר</p>
 	</footer>
 </div>
 
