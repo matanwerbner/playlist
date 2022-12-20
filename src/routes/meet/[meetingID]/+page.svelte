@@ -6,24 +6,72 @@
 	import MeetingTable from '../meetingTable.svelte';
 	import Going from '$lib/icons/going.svelte';
 	import NotGoing from '$lib/icons/notGoing.svelte';
-	import CustomButton from '../../customButton.svelte';
-	$: session = $page.data.session;
-	$: currUserID = session.userID;
+	import Modal from '../../modal.svelte';
+	import CustomTextInput from '../../customTextInput.svelte';
+	import { preferences } from '../../../store';
 	/** @type {import('./$types').PageData} */
 	export let data;
+
+	$: session = $page.data.session;
+	$: currUserID = session.userID;
+	$: members = Object.entries(data?.members).sort((a, b) => b[1].attending - a[1].attending);
+
+	let userName = $preferences.userName;
 	const dayName = Days.find((d) => d.id == data.day)?.name;
+	export const onFormSubmitted = () => {
+		preferences.update((p) => ({ userName }));
+	};
 </script>
 
-{#if !data?.members.hasOwnProperty(currUserID) && !(data.adminID == currUserID)}
-	<form class="w-full flex gap-x-3" action="?/setAttending" method="POST" use:enhance>
-		<CustomButton name="isAttending" value="true" className="w-1/2 bg-green-500"
-			><Going />מגיע\ה</CustomButton
-		>
+<Modal modalTitle="אישור הגעה" id="setAttendingModal">
+	<form
+		class="w-full flex gap-x-3 flex-col"
+		on:submit={onFormSubmitted}
+		action="?/setAttending"
+		method="POST"
+		use:enhance
+	>
+		<p>
+			<CustomTextInput label="מה שמך?" name="userName" id="userNameInput" bind:value={userName} />
+		</p>
+		<p class="flex mt-10 gap-5">
+			<button
+				disabled={!userName}
+				name="isAttending"
+				data-bs-target="#setAttendingModal"
+				data-bs-toggle="modal"
+				value="true"
+				class="w-1/2 btn bg-green-500"><Going />מגיע\ה</button
+			>
 
-		<CustomButton name="isAttending" value="false" className="w-1/2 bg-gray-600"
-			><NotGoing />לא מגיע\ה</CustomButton
-		>
+			<button
+				disabled={!userName}
+				name="isAttending"
+				data-bs-target="#setAttendingModal"
+				data-bs-toggle="modal"
+				value="false"
+				class="w-1/2 btn bg-gray-500"><NotGoing />לא מגיע\ה</button
+			>
+		</p>
 	</form>
+</Modal>
+{#if !data?.members.hasOwnProperty(currUserID) && !(data.adminID == currUserID)}
+	<p class="w-full flex gap-x-3">
+		<button
+			data-bs-target="#setAttendingModal"
+			data-bs-toggle="modal"
+			name="isAttending"
+			value="true"
+			class="w-1/2 bg-green-500 btn"><Going />מגיע\ה</button
+		>
+		<button
+			data-bs-target="#setAttendingModal"
+			data-bs-toggle="modal"
+			name="isAttending"
+			value="true"
+			class="w-1/2 bg-gray-500 btn"><NotGoing />לא מגיע\ה</button
+		>
+	</p>
 {:else}
 	<p>
 		{#if data?.members[currUserID].attending}
@@ -51,13 +99,13 @@
 		<MeetingTableCell>{dayName}</MeetingTableCell>
 	</tr>
 	<tr>
-		<MeetingTableCell>באיזו שעה?</MeetingTableCell>
+		<MeetingTableCell>שעה?</MeetingTableCell>
 		<MeetingTableCell>{data.time}</MeetingTableCell>
 	</tr>
 	<tr>
 		<MeetingTableCell colspan={2}>
 			<table class="mb-5 w-full gap-x-3">
-				{#each Object.entries(data.members) as [key, value]}
+				{#each members as [key, value]}
 					<tr>
 						<td class="w-1/2">{value.user.name}</td>
 						<td class="w-1/2"
@@ -74,5 +122,5 @@
 	</tr>
 </MeetingTable>
 {#if currUserID == data.adminID}
-	<CustomButton className="w-full mt-5 bg-blue-500">עריכת המפגש</CustomButton>
+	<button class="w-full mt-5 bg-blue-500">עריכת המפגש</button>
 {/if}

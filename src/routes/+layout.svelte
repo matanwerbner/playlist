@@ -1,5 +1,14 @@
 <script>
 	import Header from './Header.svelte';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+	onMount(async () => {
+		if (browser) {
+			// @ts-ignore
+			await import('tw-elements');
+		}
+	});
+
 	import '../app.css';
 	import './styles.css';
 </script>

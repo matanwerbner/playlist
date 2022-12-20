@@ -2,30 +2,24 @@ const plugin = require('tailwindcss/plugin');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+	content: ['./src/**/*.{html,js,svelte,ts}', './node_modules/tw-elements/dist/js/**/*.js'],
 	theme: {
 		extend: {}
 	},
 	plugins: [
-		plugin(function ({ addComponents }) {
+		require('tw-elements/dist/plugin'),
+		plugin(({ addComponents }) => {
 			addComponents({
 				'.btn': {
-					padding: '.5rem 1rem',
-					borderRadius: '.25rem',
-					fontWeight: '600'
-				},
-				'.btn-blue': {
-					backgroundColor: '#3490dc',
 					color: '#fff',
-					'&:hover': {
-						backgroundColor: '#2779bd'
-					}
-				},
-				'.btn-red': {
-					backgroundColor: '#e3342f',
-					color: '#fff',
-					'&:hover': {
-						backgroundColor: '#cc1f1a'
+					fontStyle: 'bold',
+					padding: '8px',
+					borderRadius: '5px',
+					display: 'flex',
+					justifyContent: 'center',
+					gap: 5,
+					'&:disabled': {
+						opacity: 0.5
 					}
 				}
 			});

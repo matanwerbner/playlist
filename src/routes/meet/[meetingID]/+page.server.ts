@@ -15,21 +15,23 @@ export async function load({ params }: { params: routeParams }) {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	setAttending: async ({ cookies, request, params, locals }) => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	setAttending: async ({ request, params, locals }: any) => {
 		const data = await request.formData();
 		const meetingID = params.meetingID;
 		const userID = locals.session.data.userID;
 		const isAttending = data.get('isAttending') === 'true';
+		const userName = data.get('userName');
 		const meeting = await getMeeting(meetingID);
 		if (meeting.exists()) {
 			const members = meeting.data().members;
-			await updateMeeting(meetingID, {
+			await updateMeeting(meetingID, 'members', {
 				...members,
 				[userID]: {
 					attending: isAttending,
 					user: {
 						id: userID,
-						name: 'lali'
+						name: userName
 					}
 				}
 			});

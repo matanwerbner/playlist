@@ -27,7 +27,7 @@ const createMeeting = async (meetingParams: Meeting) => {
 
 const getMeeting = async (slug: string) => await getDoc(doc(db, 'meetings', slug));
 
-const updateMeeting = async (slug: string, data: any) =>
-	await updateDoc(doc(db, 'meetings', slug), 'members', data);
+const updateMeeting = async (slug: string, path: string, data: any) =>
+	await updateDoc(doc(db, 'meetings', slug), path, data);
 
 export { createMeeting, getMeeting, updateMeeting };
