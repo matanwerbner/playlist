@@ -18,16 +18,19 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const createMeeting = async (meetingParams: Meeting) => {
-	const slug = getRandomString();
-	await setDoc(doc(db, 'meetings', slug), {
-		...meetingParams
-	});
-	return slug;
+	try {
+		await setDoc(doc(db, 'meetings', meetingParams.slug), {
+			...meetingParams
+		});
+	} catch (ex) {
+		console.log(ex);
+		return null;
+	}
 };
 
 const getMeeting = async (slug: string) => await getDoc(doc(db, 'meetings', slug));
 
-const updateMeeting = async (slug: string, path: string, data: any) =>
-	await updateDoc(doc(db, 'meetings', slug), path, data);
+const updateMeeting = async (slug: string, data: Meeting) =>
+	await updateDoc(doc(db, 'meetings', slug), data);
 
 export { createMeeting, getMeeting, updateMeeting };

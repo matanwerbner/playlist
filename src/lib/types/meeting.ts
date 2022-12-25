@@ -4,8 +4,8 @@ export type Meeting = {
 	title: string;
 	description: string;
 	location: string;
-	time: string;
-	day: 1 | 2 | 3 | 4 | 5 | 6 | 7;
+	time?: string;
+	day?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | null;
 	adminID: string;
 	members: {
 		[userId: string]: {
@@ -13,4 +13,5 @@ export type Meeting = {
 			attending: boolean;
 		};
 	};
+	slug: string;
 };

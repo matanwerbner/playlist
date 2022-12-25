@@ -1,13 +1,5 @@
 <script>
 	import Header from './Header.svelte';
-	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
-	onMount(async () => {
-		if (browser) {
-			// @ts-ignore
-			await import('tw-elements');
-		}
-	});
 
 	import '../app.css';
 	import './styles.css';
@@ -17,12 +9,14 @@
 	<Header />
 
 	<main>
-		<slot />
+		<div class="flex flex-col items-around gap-5 p-3 m-0 justify-around">
+			<slot />
+		</div>
 	</main>
 
-	<footer>
-		<!-- <p class="text-3xl font-bold underline">הפלייליסט - מבית ורבנר</p> -->
-	</footer>
+	<!-- <footer>
+		<p class="text-3xl font-bold underline">הפלייליסט - מבית ורבנר</p>
+	</footer> -->
 </div>
 
 <style>

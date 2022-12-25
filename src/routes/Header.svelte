@@ -10,7 +10,9 @@
 		<Section class="flex justify-between">
 			<IconButton class="material-icons">menu</IconButton>
 			<img width="200px" src={logo} alt="logo" />
-			<img width="40px" src={faces} alt="logo" />
+			<a href="/">
+				<img width="40px" src={faces} alt="logo" />
+			</a>
 		</Section>
 	</Row>
 </TopAppBar>

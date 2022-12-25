@@ -1,3 +1,5 @@
+import { getMeetingFromCache, setMeetingInCache } from '$lib/cache';
+import type { Meeting } from '$lib/types/meeting';
 import { error, fail } from '@sveltejs/kit';
 import { getMeeting, updateMeeting } from '../../../firebase';
 
@@ -5,9 +7,16 @@ type routeParams = { meetingID: string };
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }: { params: routeParams }) {
+	const cachedMeeting = getMeetingFromCache(params.meetingID);
+	if (cachedMeeting) {
+		return {
+			meeting: cachedMeeting
+		};
+	}
 	const meeting = await getMeeting(params.meetingID);
 	if (meeting.exists()) {
-		return meeting.data();
+		setMeetingInCache(meeting.data() as Meeting);
+		return { meeting: meeting.data() };
 	}
 
 	throw error(404, 'Not found');
@@ -16,7 +25,7 @@ export async function load({ params }: { params: routeParams }) {
 /** @type {import('./$types').Actions} */
 export const actions = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	setAttending: async ({ request, params, locals }: any) => {
+	default: async ({ request, params, locals }: any) => {
 		const data = await request.formData();
 		const meetingID = params.meetingID;
 		const userID = locals.session.data.userID;
@@ -24,8 +33,9 @@ export const actions = {
 		const userName = data.get('userName');
 		const meeting = await getMeeting(meetingID);
 		if (meeting.exists()) {
-			const members = meeting.data().members;
-			await updateMeeting(meetingID, 'members', {
+			const data = meeting.data();
+			const members = data.members;
+			const updatedMembers = {
 				...members,
 				[userID]: {
 					attending: isAttending,
@@ -34,6 +44,14 @@ export const actions = {
 						name: userName
 					}
 				}
+			};
+			updateMeeting(meetingID, {
+				...(data as Meeting),
+				members: updatedMembers
+			});
+			setMeetingInCache({
+				...(data as Meeting),
+				members: updatedMembers
 			});
 			return { success: true };
 		} else {
