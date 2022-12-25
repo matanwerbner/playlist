@@ -1,15 +1,21 @@
-<script>
-	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
+<script lang="ts">
+	import IconButton from '@smui/icon-button';
+	import TopAppBar, { Row, Title, Section } from '@smui/top-app-bar';
+	import logo from '$lib/images/logo2-text-only.png';
+	import faces from '$lib/images/faces.png';
 </script>
 
-<header>
-	<div class="corner">
-		<a href="/">
-			<img src={logo} alt="SvelteKit" />
-		</a>
-	</div>
+<TopAppBar variant="static" prominent={false} dense={true} color={'primary'}>
+	<Row>
+		<Section class="flex justify-between">
+			<IconButton class="material-icons">menu</IconButton>
+			<img width="200px" src={logo} alt="logo" />
+			<img width="40px" src={faces} alt="logo" />
+		</Section>
+	</Row>
+</TopAppBar>
 
+<!-- <header>
 	<nav>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
@@ -27,8 +33,7 @@
 			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
 		</svg>
 	</nav>
-</header>
-
+</header> -->
 <style>
 	header {
 		display: flex;

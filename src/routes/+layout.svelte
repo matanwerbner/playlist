@@ -21,7 +21,7 @@
 	</main>
 
 	<footer>
-		<p class="text-3xl font-bold underline">הפלייליסט - מבית ורבנר</p>
+		<!-- <p class="text-3xl font-bold underline">הפלייליסט - מבית ורבנר</p> -->
 	</footer>
 </div>
 
