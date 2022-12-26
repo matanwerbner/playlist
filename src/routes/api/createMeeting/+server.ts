@@ -4,7 +4,8 @@ import type { Meeting } from '$lib/types/meeting';
 import { redirect } from '@sveltejs/kit';
 import { createMeeting } from '../../../firebase';
 
-export const POST = async ({ request, locals }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const POST = async ({ request, locals }: any) => {
 	const data = await request.formData();
 	const userID = locals.session.data.userID;
 	const meeting: Meeting = {

@@ -1,14 +1,34 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import IconButton from '@smui/icon-button';
-	import TopAppBar, { Row, Title, Section } from '@smui/top-app-bar';
+	import TopAppBar, { Row, Section } from '@smui/top-app-bar';
 	import logo from '$lib/images/logo2-text-only.png';
 	import faces from '$lib/images/faces.png';
+	import Menu from '@smui/menu';
+	import List, { Item, Text } from '@smui/list';
+	let menu: Menu;
 </script>
 
 <TopAppBar variant="static" prominent={false} dense={true} color={'primary'}>
 	<Row>
 		<Section class="flex justify-between">
-			<IconButton class="material-icons">menu</IconButton>
+			<div>
+				<IconButton on:click={() => menu.setOpen(true)} class="material-icons">menu</IconButton>
+				<Menu bind:this={menu}>
+					<List>
+						<Item
+							on:SMUI:action={() => {
+								window.location.href = '/meet/create';
+							}}
+						>
+							<Text>מפגש חדש</Text>
+						</Item>
+						<Item on:SMUI:action={() => {}}>
+							<Text>צרו קשר</Text>
+						</Item>
+					</List>
+				</Menu>
+			</div>
 			<img width="200px" src={logo} alt="logo" />
 			<a href="/">
 				<img width="40px" src={faces} alt="logo" />
