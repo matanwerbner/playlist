@@ -35,16 +35,29 @@ export const actions = {
 		if (meeting.exists()) {
 			const data = meeting.data();
 			const members = data.members;
-			const updatedMembers = {
-				...members,
-				[userID]: {
-					attending: isAttending,
-					user: {
-						id: userID,
-						name: userName
+			let updatedMembers = null;
+			if (userName == null) {
+				// we update existing member attending
+				updatedMembers = {
+					...members,
+					[userID]: {
+						...members[userID],
+						attending: isAttending
 					}
-				}
-			};
+				};
+			} else {
+				updatedMembers = {
+					...members,
+					[userID]: {
+						attending: isAttending,
+						user: {
+							id: userID,
+							name: userName
+						}
+					}
+				};
+			}
+
 			updateMeeting(meetingID, {
 				...(data as Meeting),
 				members: updatedMembers

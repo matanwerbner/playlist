@@ -1,8 +1,8 @@
 <script>
 	import Header from './Header.svelte';
-
+	import '../reset.css';
+	import '../typography.scss';
 	import '../app.css';
-	import './styles.css';
 </script>
 
 <div class="app text-xl ">

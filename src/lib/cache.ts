@@ -1,6 +1,6 @@
 import NodeCache from 'node-cache';
 import type { Meeting } from './types/meeting';
-const myCache = new NodeCache({ stdTTL: 1 });
+const myCache = new NodeCache();
 
 export const setMeetingInCache = (meeting: Meeting) => {
 	myCache.set<Meeting>(meeting.slug, meeting);

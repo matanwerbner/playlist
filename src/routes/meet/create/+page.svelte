@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { Days, getRandomString } from '$lib/consts';
 	import Button, { Label } from '@smui/button';
-	import { page } from '$app/stores';
 	import { preferences } from '../../../store';
 	import Paper, { Title, Subtitle, Content } from '@smui/paper';
 	import Select, { Option } from '@smui/select';
@@ -98,6 +96,7 @@
 			<div>
 				<Textfield
 					name="adminName"
+					required
 					style="width: 100%;"
 					variant="outlined"
 					class="shaped-outlined"
