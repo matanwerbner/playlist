@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { LayoutData } from './$types';
 	import { page } from '$app/stores';
 	import { Days } from '$lib/consts';
 	import Fab from '@smui/fab';
@@ -7,11 +8,10 @@
 	import Paper, { Title, Subtitle, Content } from '@smui/paper';
 	import Going from '$lib/icons/going.svelte';
 	import NotGoing from '$lib/icons/notGoing.svelte';
-	import type { Meeting } from '$lib/types/meeting';
 	import AttendingDialog from './attendingDialog.svelte';
 	import WhatsappShareButton from './whatsappShareButton.svelte';
 	import { getMemberNamesList } from './utils';
-	export let data: { meeting: Meeting; session: any };
+	export let data: LayoutData;
 	let isLoading = false;
 	let currMeeting = data.meeting;
 	$: session = $page.data.session;
@@ -103,7 +103,7 @@
 			</form>
 		{/if}
 		{#if currUserID == currMeeting.adminID}
-			<Fab color="primary" extended class="w-1/2"
+			<Fab color="primary" href="edit" extended class="w-1/2"
 				>עריכת המפגש&nbsp;&nbsp;<Icon class="material-icons">edit</Icon></Fab
 			>
 		{/if}

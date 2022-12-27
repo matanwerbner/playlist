@@ -8,3 +8,5 @@ export const load = async ({ locals }: any) => {
 		session: locals.session.data // You can also use your old `getSession` function if you wish.
 	};
 };
+
+export const trailingSlash = 'always';

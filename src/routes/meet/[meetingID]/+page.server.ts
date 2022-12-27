@@ -1,26 +1,7 @@
-import { getMeetingFromCache, setMeetingInCache } from '$lib/cache';
+import { setMeetingInCache } from '$lib/cache';
 import type { Meeting } from '$lib/types/meeting';
-import { error, fail } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import { getMeeting, updateMeeting } from '../../../firebase';
-
-type routeParams = { meetingID: string };
-
-/** @type {import('./$types').PageServerLoad} */
-export async function load({ params }: { params: routeParams }) {
-	const cachedMeeting = getMeetingFromCache(params.meetingID);
-	if (cachedMeeting) {
-		return {
-			meeting: cachedMeeting
-		};
-	}
-	const meeting = await getMeeting(params.meetingID);
-	if (meeting.exists()) {
-		setMeetingInCache(meeting.data() as Meeting);
-		return { meeting: meeting.data() };
-	}
-
-	throw error(404, 'Not found');
-}
 
 /** @type {import('./$types').Actions} */
 export const actions = {
