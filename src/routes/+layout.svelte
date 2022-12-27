@@ -5,6 +5,21 @@
 	import '../app.css';
 </script>
 
+<svelte:head>
+	<meta property="og:site_name" content="Playlist.co.il" />
+
+	<meta
+		property="og:image"
+		itemprop="image"
+		content="%sveltekit.assets%/android-chrome-192x192.png"
+	/>
+	<meta property="og:type" content="website" />
+	<meta property="og:updated_time" content="1440432930" />
+	<meta
+		name="description"
+		content="האפליקציה שנותנת לכם ליצור מפגשים ולשתף אותם, כך שתמיד תדעו מי מגיע ומי לא"
+	/>
+</svelte:head>
 <div class="app text-xl ">
 	<Header />
 

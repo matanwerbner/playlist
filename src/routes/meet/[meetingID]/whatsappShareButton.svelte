@@ -4,25 +4,17 @@
 	import WhatsappIcon from '$lib/icons/whatsapp.svelte';
 	import { isMobileOrTablet } from '$lib/utilities/device';
 
-	const WHATSAPP_GREEN = '#25D366';
-
 	export let url;
 	export let title;
+	const isMobile = browser && isMobileOrTablet();
+	const lineBreak = '%0a';
+	const baseUrl = isMobile ? 'whatsapp://send' : 'https://web.whatsapp.com/send';
+	const intro = 'כנסו ללינק לאשר שאתם מגיעים';
+	const text = `👉👉👉 ${lineBreak}${encodeURIComponent(
+		url
+	)}${lineBreak}${title}${lineBreak}${intro}${lineBreak} 👈👈👈`;
 
-	const baseUrl =
-		browser && isMobileOrTablet()
-			? 'https://api.whatsapp.com/send'
-			: 'https://web.whatsapp.com/send';
-	const parametersObject = {
-		text: title ? title + ' ' + url : url
-	};
-
-	const params = Object.entries(parametersObject)
-		.filter(([, value]) => value ?? false)
-		.map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)
-		.join('&');
-
-	const urlWithParameters = params === '' ? baseUrl : `${baseUrl}?${params}`;
+	const urlWithParameters = `${baseUrl}?text=${text}`;
 
 	function handleClick() {
 		const config = {

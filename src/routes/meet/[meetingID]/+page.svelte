@@ -21,6 +21,16 @@
 	const dayName = Days.find((d) => d.id == currMeeting.day)?.name;
 </script>
 
+<svelte:head>
+	<title>{currMeeting.title} - Playlist.co.il</title>
+
+	<meta property="og:title" content="{currMeeting.title} - Playlist.co.il" />
+	<meta
+		property="og:description"
+		content="האפליקציה שנותנת לכם ליצור מפגשים ולשתף אותם, כך שתמיד תדעו מי מגיע ומי לא"
+	/>
+</svelte:head>
+
 {#if !hasSetAttendance}
 	<AttendingDialog />
 {/if}
@@ -90,12 +100,12 @@
 		{#if hasSetAttendance}
 			<form method="POST" class="w-1/2" on:submit={() => (isLoading = true)}>
 				{#if currMeeting?.members[currUserID]?.attending}
-					<Fab touch color="secondary" class="flex center w-full" extended
+					<Fab touch color="secondary" class="flex center w-full m-0" extended
 						>ביטול הגעה &nbsp;&nbsp;<Icon class="material-icons">cancel</Icon></Fab
 					>
 					<input type="hidden" name="isAttending" value="false" />
 				{:else}
-					<Fab touch color="primary" class="flex center w-full" extended
+					<Fab touch color="primary" class="flex center w-full m-0" extended
 						>אישור הגעה &nbsp;&nbsp;<Icon class="material-icons">check</Icon></Fab
 					>
 					<input type="hidden" name="isAttending" value="true" />

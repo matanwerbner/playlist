@@ -9,6 +9,9 @@ const sessionHandler = handleSession({
 	}
 });
 
-export const handle = sequence(sessionHandler, ({ resolve, event }) => {
+export const handle = sequence(sessionHandler, async ({ resolve, event }) => {
+	if (!event.locals.session.data.userID) {
+		await event.locals.session.set({ userID: Math.random().toString(16).slice(2) });
+	}
 	return resolve(event);
 });

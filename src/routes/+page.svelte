@@ -6,8 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>פלייליסט</title>
 </svelte:head>
 <Paper class="text-shadow-white">
 	<Content>
