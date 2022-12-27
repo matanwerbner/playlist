@@ -2,7 +2,8 @@
 	import { page } from '$app/stores';
 	import { Days } from '$lib/consts';
 	import Fab from '@smui/fab';
-	import { Icon, Label } from '@smui/common';
+	import LinearProgress from '@smui/linear-progress';
+	import { Icon } from '@smui/common';
 	import Paper, { Title, Subtitle, Content } from '@smui/paper';
 	import Going from '$lib/icons/going.svelte';
 	import NotGoing from '$lib/icons/notGoing.svelte';
@@ -10,25 +11,23 @@
 	import AttendingDialog from './attendingDialog.svelte';
 	import WhatsappShareButton from './whatsappShareButton.svelte';
 	import { getMemberNamesList } from './utils';
-	import { enhance } from '$app/forms';
 	export let data: { meeting: Meeting; session: any };
-
+	let isLoading = false;
 	let currMeeting = data.meeting;
 	$: session = $page.data.session;
 	$: currUserID = session.userID;
 	$: members = getMemberNamesList(currMeeting);
-	const hasSetAttendance =
-		!currMeeting?.members.hasOwnProperty(currUserID) && !(currMeeting.adminID == currUserID);
+	$: hasSetAttendance = currMeeting?.members[currUserID] || currMeeting.adminID == currUserID;
 	const dayName = Days.find((d) => d.id == currMeeting.day)?.name;
 </script>
 
 {#if !hasSetAttendance}
 	<AttendingDialog />
 {/if}
-<WhatsappShareButton title={currMeeting.title} url={$page.url.href} />
+
 <Paper>
-	<Title><h2>{currMeeting.title}</h2></Title>
-	<Subtitle><h3>{currMeeting.description}</h3></Subtitle>
+	<Title><h4>{currMeeting.title}</h4></Title>
+	<Subtitle><h5>{currMeeting.description}</h5></Subtitle>
 	<Content>
 		<table class="meetingDetailsTable">
 			<tr>
@@ -50,50 +49,66 @@
 		</table>
 	</Content>
 </Paper>
-<Paper>
-	<Content>
+<Paper class="relative">
+	<Content class="flex justify-between">
 		{#if members.going.length > 0}
-			<h5>אישרו הגעה&nbsp;<Going /></h5>
-			<ol style="list-style-type: decimal;">
-				{#each members.going as member}
-					<li class="m-5">
-						<h5>{member}</h5>
-					</li>
-				{/each}
-			</ol>
+			<div>
+				<h7>אישרו הגעה&nbsp;</h7>
+				<ol style="list-style-type: decimal;">
+					{#each members.going as member}
+						<li class="m-5">
+							<h7>{member}&nbsp; <Going /></h7>
+						</li>
+					{/each}
+				</ol>
+			</div>
 		{/if}
+
 		{#if members.notGoing.length > 0}
-			<h5>לא יגיעו&nbsp;<NotGoing /></h5>
-			<ol style="list-style-type: decimal;">
-				{#each members.notGoing as member}
-					<li class="m-5">
-						<h5>{member}</h5>
-					</li>
-				{/each}
-			</ol>
+			<div>
+				<h7>לא יגיעו&nbsp;</h7>
+				<ol style="list-style-type: decimal;">
+					{#each members.notGoing as member}
+						<li class="m-5">
+							<h7>{member}&nbsp; <NotGoing /></h7>
+						</li>
+					{/each}
+				</ol>
+			</div>
 		{/if}
 	</Content>
+	{#if isLoading}
+		<div class="loadingContainer">
+			<LinearProgress indeterminate />
+		</div>
+	{/if}
 </Paper>
-{#if currUserID == currMeeting.adminID}
-	<Fab color="primary" extended class="w-full mt-5 "
-		>עריכת המפגש&nbsp;&nbsp;<Icon class="material-icons">edit</Icon></Fab
-	>
-{/if}
-{#if hasSetAttendance}
-	<form method="POST">
-		{#if currMeeting?.members[currUserID].attending}
-			<Fab touch color="secondary" class="flex center w-full" extended
-				>ביטול הגעה &nbsp;&nbsp;<Icon class="material-icons">cancel</Icon></Fab
-			>
-			<input type="hidden" name="isAttending" value="false" />
-		{:else}
-			<Fab touch color="primary" class="flex center w-full" extended
-				>אישור הגעה &nbsp;&nbsp;<Icon class="material-icons">check</Icon></Fab
-			>
-			<input type="hidden" name="isAttending" value="true" />
+
+<div class="flex flex-col gap-3 ">
+	<WhatsappShareButton title={currMeeting.title} url={$page.url.href} />
+	<div class="flex gap-7">
+		{#if hasSetAttendance}
+			<form method="POST" class="w-1/2" on:submit={() => (isLoading = true)}>
+				{#if currMeeting?.members[currUserID]?.attending}
+					<Fab touch color="secondary" class="flex center w-full" extended
+						>ביטול הגעה &nbsp;&nbsp;<Icon class="material-icons">cancel</Icon></Fab
+					>
+					<input type="hidden" name="isAttending" value="false" />
+				{:else}
+					<Fab touch color="primary" class="flex center w-full" extended
+						>אישור הגעה &nbsp;&nbsp;<Icon class="material-icons">check</Icon></Fab
+					>
+					<input type="hidden" name="isAttending" value="true" />
+				{/if}
+			</form>
 		{/if}
-	</form>
-{/if}
+		{#if currUserID == currMeeting.adminID}
+			<Fab color="primary" extended class="w-1/2"
+				>עריכת המפגש&nbsp;&nbsp;<Icon class="material-icons">edit</Icon></Fab
+			>
+		{/if}
+	</div>
+</div>
 
 <style lang="scss">
 	table.meetingDetailsTable {
@@ -104,7 +119,7 @@
 		text-align: right;
 		width: 100%;
 		vertical-align: middle;
-		font-size: 2rem;
+		font-size: 1.2rem;
 	}
 	table.meetingDetailsTable > tr > td:first-child {
 		width: 50px;

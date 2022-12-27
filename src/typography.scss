@@ -19,6 +19,11 @@
 // Import the mixins.
 @use '@material/typography/index' as typography;
 
+@font-face {
+	font-family: 'Varela';
+	src: url('/fonts/VarelaRound-Regular.woff2') format('woff2'),
+		url('/fonts/VarelaRound-Regular.ttf') format('ttf');
+}
 //
 // Some defaults that may be helpful to you.
 // If you just want to use these, and not the classes, you can instead just
@@ -26,6 +31,10 @@
 //
 html {
 	@include typography.typography('body1');
+}
+
+*:not(.material-icons) {
+	font-family: 'Varela' !important;
 }
 
 h1 {
@@ -58,7 +67,7 @@ caption {
 
 code,
 pre {
-	font-family: 'Roboto Mono', monospace;
+	font-family: 'Varela';
 }
 
 small {

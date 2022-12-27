@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": "npm run smui-theme && vite dev",
 		"build": "vite build",
-		"preview": "vite preview",
+		"preview": "vite build && vite preview",
 		"test": "playwright test",
 		"prepare": "npm run smui-theme",
 		"smui-theme": "smui-theme compile static/smui.css -i src/theme",
@@ -24,6 +24,7 @@
 		"@smui/fab": "^7.0.0-beta.0",
 		"@smui/form-field": "^7.0.0-beta.0",
 		"@smui/icon-button": "^7.0.0-beta.0",
+		"@smui/linear-progress": "^7.0.0-beta.0",
 		"@smui/list": "^7.0.0-beta.0",
 		"@smui/menu": "^7.0.0-beta.0",
 		"@smui/paper": "^7.0.0-beta.0",

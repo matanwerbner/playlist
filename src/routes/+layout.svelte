@@ -8,15 +8,11 @@
 <div class="app text-xl ">
 	<Header />
 
-	<main>
-		<div class="flex flex-col items-around gap-5 p-3 m-0 justify-around">
-			<slot />
-		</div>
-	</main>
+	<main><slot /></main>
 
-	<!-- <footer>
-		<p class="text-3xl font-bold underline">הפלייליסט - מבית ורבנר</p>
-	</footer> -->
+	<footer>
+		<p class="text-3xl font-bold ">www.playlist.co.il</p>
+	</footer>
 </div>
 
 <style>
@@ -36,6 +32,7 @@
 		max-width: 64rem;
 		margin: 0 auto;
 		box-sizing: border-box;
+		gap: 1.3rem;
 	}
 
 	footer {
