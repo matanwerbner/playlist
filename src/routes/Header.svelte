@@ -3,7 +3,7 @@
 	import IconButton from '@smui/icon-button';
 	import TopAppBar, { Row, Section } from '@smui/top-app-bar';
 	import logo from '$lib/images/logo2-text-only.png';
-	import faces from '$lib/images/faces.png';
+	import faces from '$lib/images/android-chrome-192x192.png';
 	import Menu from '@smui/menu';
 	import List, { Item, Text } from '@smui/list';
 	let menu: Menu;
