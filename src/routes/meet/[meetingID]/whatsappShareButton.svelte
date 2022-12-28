@@ -1,18 +1,26 @@
-<script>
+<script lang="ts">
 	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
 	import Button, { Label, Icon } from '@smui/button';
 	import WhatsappIcon from '$lib/icons/whatsapp.svelte';
 	import { isMobileOrTablet } from '$lib/utilities/device';
+	import type { Meeting } from '$lib/types/meeting';
+	import { Days } from '$lib/consts';
 
-	export let url;
-	export let title;
+	export let meeting: Meeting;
+	const url = $page.url.href;
 	const isMobile = browser && isMobileOrTablet();
 	const lineBreak = '%0a';
 	const baseUrl = isMobile ? 'whatsapp://send' : 'https://web.whatsapp.com/send';
 	const intro = 'כנסו ללינק לאשר שאתם מגיעים';
-	const text = `👉👉👉 ${lineBreak}${encodeURIComponent(
-		url
-	)}${lineBreak}${title}${lineBreak}${intro}${lineBreak} 👈👈👈`;
+	const timeString = meeting.day
+		? `ביום ${Days.find((d) => d.id == meeting.day)?.name}
+	 ${meeting.time ? 'בשעה' + meeting.time : ''}${lineBreak}`
+		: '';
+	const locationString = `ב${meeting.location}${lineBreak}`;
+	const text = `👈👈👈 ${lineBreak}${encodeURIComponent(url)}${lineBreak}${
+		meeting.title
+	}${lineBreak}${timeString}${locationString}${intro}${lineBreak} 👉👉👉 `;
 
 	const urlWithParameters = `${baseUrl}?text=${text}`;
 

@@ -95,7 +95,7 @@
 </Paper>
 
 <div class="flex flex-col gap-3 ">
-	<WhatsappShareButton title={currMeeting.title} url={$page.url.href} />
+	<WhatsappShareButton meeting={currMeeting} />
 	<div class="flex gap-7">
 		{#if hasSetAttendance}
 			<form method="POST" class="w-1/2" on:submit={() => (isLoading = true)}>

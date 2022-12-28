@@ -24,7 +24,8 @@ export const POST = async ({ request, locals }: any) => {
 				}
 			}
 		},
-		slug: data.get('slug')
+		slug: data.get('slug'),
+		dateCreated: Date.now()
 	};
 	setMeetingInCache(meeting);
 	createMeeting(meeting);
