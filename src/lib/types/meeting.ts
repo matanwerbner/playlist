@@ -15,4 +15,5 @@ export type Meeting = {
 	};
 	slug: string;
 	dateCreated?: number;
+	dateUpdate?: number;
 };

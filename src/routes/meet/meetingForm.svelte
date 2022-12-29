@@ -13,6 +13,7 @@
 	let selectedDay: null = null;
 	export let meeting: Meeting;
 	export let title = '';
+	export let action = '   ';
 	let isLoading = false;
 	const onSubmit = async (e: { preventDefault: () => void }) => {
 		isLoading = true;
@@ -23,12 +24,7 @@
 <Paper class="mb-12 relative">
 	<Title>{title}</Title>
 	<Content>
-		<form
-			method="POST"
-			class="flex flex-col gap-3 mt-5"
-			action="/api/createMeeting"
-			on:submit={onSubmit}
-		>
+		<form method="POST" class="flex flex-col gap-3 mt-5" {action} on:submit={onSubmit}>
 			<input type="hidden" name="slug" bind:value={meeting.slug} />
 			<input type="hidden" name="title" bind:value={meeting.title} />
 			<input type="hidden" name="time" bind:value={meeting.time} />

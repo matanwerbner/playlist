@@ -21,4 +21,4 @@
 	<meta name="description" content="About this app" />
 </svelte:head>
 
-<MeetingForm title="יצירת מפגש חדש" meeting={newMeeting} />
+<MeetingForm action="/api/createMeeting" title="יצירת מפגש חדש" meeting={newMeeting} />

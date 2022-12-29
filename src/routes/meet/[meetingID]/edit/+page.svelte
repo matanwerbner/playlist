@@ -7,4 +7,4 @@
 	$: meeting = data.meeting as Meeting;
 </script>
 
-<MeetingForm title="עריכת מפגש" {meeting} />
+<MeetingForm action="/api/updateMeeting" title="עריכת מפגש" {meeting} />
