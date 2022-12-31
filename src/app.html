@@ -10,6 +10,11 @@
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block"
 		/>
+		<script>
+			window.addEventListener('beforeinstallprompt', (e) => {
+				e.preventDefault();
+			});
+		</script>
 		%sveltekit.head%
 	</head>
 	<body dir="rtl" data-sveltekit-preload-data="hover">
