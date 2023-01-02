@@ -13,10 +13,8 @@
 	const lineBreak = '%0a';
 	const baseUrl = isMobile ? 'whatsapp://send' : 'https://web.whatsapp.com/send';
 	const intro = 'כנסו ללינק לאשר שאתם מגיעים';
-	const timeString = meeting.day
-		? `ביום ${Days.find((d) => d.id == meeting.day)?.name}
-	 ${meeting.time ? 'בשעה' + meeting.time : ''}${lineBreak}`
-		: '';
+	let timeString = meeting.day ? `ביום ${Days.find((d) => d.id == meeting.day)?.name} ` : '';
+	timeString += meeting.time ? `${meeting.time ? 'בשעה' + meeting.time : ''}${lineBreak}` : '';
 	const locationString = `ב${meeting.location}${lineBreak}`;
 	const text = `👈👈👈 ${lineBreak}${encodeURIComponent(url)}${lineBreak}${
 		meeting.title
