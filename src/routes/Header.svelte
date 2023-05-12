@@ -7,6 +7,10 @@
 	import Menu from '@smui/menu';
 	import List, { Item, Text } from '@smui/list';
 	let menu: Menu;
+
+	let navgiateTo = (path: string) => {
+		window.location.href = path;
+	};
 </script>
 
 <TopAppBar variant="static" prominent={false} dense={false} color={'primary'}>
@@ -17,13 +21,11 @@
 				<Menu bind:this={menu}>
 					<List>
 						<Item
-							on:SMUI:action={() => {
-								window.location.href = '/meet/create';
-							}}
+							on:SMUI:action={() => navgiateTo('/meet/create')}
 						>
 							<Text>מפגש חדש</Text>
 						</Item>
-						<Item on:SMUI:action={() => {}}>
+						<Item on:SMUI:action={() => navgiateTo('/contactus')}>
 							<Text>צרו קשר</Text>
 						</Item>
 					</List>
