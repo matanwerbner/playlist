@@ -17,7 +17,7 @@ declare namespace App {
 
 	//interface Platform {}
 
-//	interface PrivateEnv {}
+	//	interface PrivateEnv {}
 
-//	interface PublicEnv {}
+	//	interface PublicEnv {}
 }

@@ -20,9 +20,7 @@
 				<IconButton on:click={() => menu.setOpen(true)} class="material-icons">menu</IconButton>
 				<Menu bind:this={menu}>
 					<List>
-						<Item
-							on:SMUI:action={() => navgiateTo('/meet/create')}
-						>
+						<Item on:SMUI:action={() => navgiateTo('/meet/create')}>
 							<Text>מפגש חדש</Text>
 						</Item>
 						<Item on:SMUI:action={() => navgiateTo('/contactus')}>

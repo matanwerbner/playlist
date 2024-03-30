@@ -40,7 +40,6 @@
 			urlWithParameters,
 			'',
 			Object.keys(config)
-				// @ts-ignore
 				.map((key) => `${key}=${config[key]}`)
 				.join(',')
 		);

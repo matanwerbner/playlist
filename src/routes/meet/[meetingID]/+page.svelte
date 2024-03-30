@@ -94,7 +94,7 @@
 	{/if}
 </Paper>
 
-<div class="flex flex-col gap-3 ">
+<div class="flex flex-col gap-3">
 	<WhatsappShareButton meeting={currMeeting} />
 	<div class="flex gap-7">
 		{#if hasSetAttendance}

@@ -9,7 +9,7 @@
 	let userName = $preferences.userName;
 
 	const onFormSubmitted = () => {
-		preferences.update((p) => ({ userName }));
+		preferences.update(() => ({ userName }));
 	};
 </script>
 

@@ -15,13 +15,13 @@
 		content="האפליקציה שנותנת לכם ליצור מפגשים ולשתף אותם, כך שתמיד תדעו מי מגיע ומי לא"
 	/>
 </svelte:head>
-<div class="app text-xl ">
+<div class="app text-xl">
 	<Header />
 
 	<main><slot /></main>
 
 	<footer>
-		<p class="text-3xl font-bold ">www.playlist.co.il</p>
+		<p class="text-3xl font-bold">www.playlist.co.il</p>
 	</footer>
 </div>
 
@@ -51,10 +51,6 @@
 		justify-content: center;
 		align-items: center;
 		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
 	}
 
 	@media (min-width: 480px) {

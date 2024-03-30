@@ -10,14 +10,14 @@
 	import Button, { Label } from '@smui/button';
 	import type { Meeting } from '$lib/types/meeting';
 	let adminName = $preferences.userName;
-	let selectedDay: null = null;
+	let selectedDay = null;
 	export let meeting: Meeting;
 	export let title = '';
 	export let action = '   ';
 	let isLoading = false;
-	const onSubmit = async (e: { preventDefault: () => void }) => {
+	const onSubmit = async () => {
 		isLoading = true;
-		preferences.update((p) => ({ userName: adminName }));
+		preferences.update(() => ({ userName: adminName }));
 	};
 </script>
 
